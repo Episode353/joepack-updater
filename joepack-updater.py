@@ -1,23 +1,25 @@
 import os
 import shutil
-import subprocess
+import urllib.request
 
-def download_github_repo(repo_url, folder_path):
-    # Check if folder exists
-    if os.path.exists(folder_path):
-        print(f"The folder '{folder_path}' already exists.")
-        print(f"Make sure '{folder_path}' is unequipped in the resource packs, then delete it.")
-        input(f"Please delete the '{folder_path}' folder and try again ")
-        return
+def main():
+    if os.path.exists("joepack"):
+        print("Please delete the 'joepack' folder before continuing.")
+    else:
+        download_repo()
+        input("Press Enter to exit...")  # Wait for user confirmation before closing
 
-    # Clone the GitHub repo
-    subprocess.run(["git", "clone", repo_url, folder_path])
+def download_repo():
+    url = "https://github.com/Episode353/joepack/archive/main.zip"
+    zip_file = "joepack-main.zip"
+    urllib.request.urlretrieve(url, zip_file)
+    shutil.unpack_archive(zip_file, ".")  # Extract directly into the current directory
+    os.remove(zip_file)
+    # Rename the extracted folder to "joepack"
+    os.rename("joepack-main", "joepack")
+    print("Repository downloaded successfully.")
+
+
 
 if __name__ == "__main__":
-    repo_url = "https://github.com/Episode353/joepack"
-    folder_path = "joepack"
-
-    download_github_repo(repo_url, folder_path)
-
-# to build use command
-# pyinstaller joepack-updater.py --onefile
+    main()
