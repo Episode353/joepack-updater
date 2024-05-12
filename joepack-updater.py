@@ -6,8 +6,8 @@ def download_github_repo(repo_url, folder_path):
     # Check if folder exists
     if os.path.exists(folder_path):
         print(f"The folder '{folder_path}' already exists.")
+        print(f"Make sure '{folder_path}' is unequipped in the resource packs, then delete it.")
         input(f"Please delete the '{folder_path}' folder and try again ")
-        input("You may close this window.")
         return
 
     # Clone the GitHub repo
